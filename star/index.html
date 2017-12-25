@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        p{
+            display: inline-block;
+        }
+        #d1{
+            color: red;
+        }
+        #d2{
+            border:1px solid red;
+            width:100px;
+            height:20px;
+            display: inline-block;
+        }
+        #d3{
+            background: yellow;
+            height: 20px;
+            display: inline-block;
+        }
+        img{
+            user-select:none
+        }
+    </style>
+    <script>
+        var jishiqi;//定时器名
+        var shijian;//时间名
+        var count=0;//记录星星数量
+        var n=0;//记录时间秒数
+        //创建计时器
+        function KS() {
+            window.clearInterval(shijian);
+            window.clearInterval(jishiqi);
+            shijian = window.setInterval("sj()",1000);
+            jishiqi = window.setInterval("start()",500);
+        }
+        //创建星星
+        function start() {
+            var obj=document.createElement("img");
+            obj.src="xingxing.gif";
+        //星星的随机大小
+            var w=Math.floor(Math.random()*80+20);
+            obj.width=w;
+        //星星出现的随机位置
+            var x=Math.floor(Math.random()*1000+100);
+            var y=Math.floor(Math.random()*400+100);
+            obj.style.position="absolute";
+            obj.style.top=y+"px";
+            obj.style.left=x+"px";
+        //创建一个点击事件
+            obj.onclick=XS;
+        //记录星星个数
+            count++;
+            var jd=document.getElementById("d3");
+            jd.style.width=count*5+'px';
+            if(count>=20) {
+                alert("游戏结束");
+                window.clearInterval(jishiqi);
+                location.reload();
+            }
+        //放到body中
+            document.body.appendChild(obj);
+        }
+        function XS() {
+            this.parentNode.removeChild(this);
+            count--;
+            var jd=document.getElementById("d3");
+            jd.style.width=count*5+'px';
+        }
+        function ZT() {
+            alert("游戏暂停");
+        }
+        function sj() {
+            n++;
+            var obj=document.getElementById("d1");
+            obj.innerHTML=n
+        }
+    </script>
+</head>
+<body>
+<!--创建一个开始按钮和暂停按钮-->
+<input type="button" value="开始游戏" onclick="KS()">
+<input type="button" value="暂停游戏" onclick="ZT()">
+<p>游戏进行了<span id="d1">0</span>秒</p>
+<span id="d2"><span id="d3"></span></span>
+</body>
+</html>

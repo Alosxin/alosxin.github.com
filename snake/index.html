@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        canvas{
+            box-shadow: 0 0 5px 5px gray;
+            margin: 0 auto;
+            background-color: black;
+            position: absolute;
+            margin-left: 50%;
+            left: -250px;
+            top: 50px;
+        }
+        #txt{
+            color: red;
+            font-size: 22px;
+        }
+        button{
+            margin-right: 20px;
+            background-color: blue;
+            font-weight: 500;
+            color: white;
+        }
+        div{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <button id="btn">重新开始</button>
+        <span>分数 <span id="txt">0</span> </span>
+    </div>
+    <canvas tabindex="1"  id="canvas" width="502" height="502px"></canvas>
+
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    var txt = document.getElementById("txt");
+    var btn = document.getElementById("btn");
+
+    var snake = [122,121,120];
+    var way = 1;
+    var foodNum = ~~(Math.random()*100);
+    var count = 0;
+    window.onload = function () {
+        $("#canvas").focus();
+        btn.onclick = function () {
+            location.reload()
+        };
+        t=setInterval(function () {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            //画地图
+
+            ctx.lineWidth = 2;
+            ctx.fillStyle = "black"
+            for(var i = 0;i < 20;i++){
+                for (var j = 0;j < 20;j++){
+                    ctx.fillRect(i*25+1,j*25+1,25,25)
+                    ctx.fill();
+                }
+            }
+
+
+            //画蛇
+            function paintSnake() {
+                for (s in snake) {
+                    ctx.fillStyle = "red";
+                    var col = ~~(snake[s] / 20);
+                    var row = snake[s] % 20;
+                    ctx.fillRect(row * 25 + 1, col * 25 + 1, 25, 25);
+                }
+            }
+
+            !function moveSnake() {
+                var movesnake = snake[0]+way;
+                if(movesnake<=0 || movesnake>=399 || way==1&&movesnake%20==0 || way==-1&&movesnake%20==19){
+                    alert("GAME OVER");
+                    clearInterval(t);
+                }
+
+                if(snake.indexOf(movesnake,1) != -1){
+                    alert("GAME OVER");
+                    clearInterval(t);
+                }
+
+                snake.unshift(movesnake);
+                if(movesnake == foodNum){
+                    count ++;
+                    while(snake.indexOf(foodNum=~~(Math.random()*400))!=-1);
+                }else{
+                    snake.pop();
+
+                }
+
+                paintSnake();
+            }()
+
+            //画食物
+            !function paintFood(){
+                var col = ~~(foodNum/20);
+                var row = foodNum%20;
+                ctx.fillStyle = "yellow";
+                ctx.fillRect(row*25+1,col*25+1,25,25);
+            }()
+
+            //键盘控制
+            canvas.onkeyup = function (e) {
+                if(e.keyCode>=37 && e.keyCode<=40){
+                    if( Math.abs(way) == 1  && (e.keyCode == 37 || e.keyCode == 39)) return;
+                    if( Math.abs(way) == 20 && (e.keyCode == 38 || e.keyCode == 40)) return;
+                    switch(e.keyCode){
+                        case 37: way = -1;  break;
+                        case 38: way = -20; break;
+                        case 39: way = 1;   break;
+                        case 40: way = 20;  break;
+                    }
+                }
+            }
+            txt.innerHTML = count
+        },200)
+    }
+
+
+
+</script>
+</html>

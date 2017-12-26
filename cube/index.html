@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div{
+            width: 200px;
+            height: 200px;
+            text-align: center;
+            line-height:200px;
+            font-size: 50px;
+        }
+        .box{
+            margin: 0 auto;
+            position: relative;
+            left: 0px;
+            top: 0px;
+            transform-style: preserve-3d;
+        }
+        .box>div{
+            opacity:0.7
+        }
+        .d1{
+            background-color: red;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            transform: translateZ(100px);
+            z-index: 999;
+        }
+        .d2{
+            background-color: blue;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            transform: translateZ(-100px) rotateY(180deg);
+        }
+        .d3{
+            background-color: yellow;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            transform: rotateY(90deg) translateZ(100px);
+        }
+        .d4{
+            background-color: greenyellow;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            transform: rotateY(270deg) translateZ(100px);
+        }
+        .d5{
+            background-color: #8a008b;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            transform: rotateX(90deg) translateZ(100px);
+        }
+        .d6{
+            background-color: orangered;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            transform: rotateX(270deg) translateZ(100px);
+        }
+        
+        @keyframes X{
+        	from{}
+        	to{transform: rotateX(360deg)}
+        }
+        @keyframes Y{
+        	from{}
+        	to{transform: rotateY(360deg)}
+        }
+        @keyframes Z{
+        	from{}
+        	to{transform: rotateZ(360deg)}
+        }
+        @keyframes XYZ{
+        	from{}
+        	to{transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);}
+        }
+         @keyframes STOP{
+        	from{}
+        	to{transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);}
+        }
+    </style>
+</head>
+<body>
+    <button class="btn1">XYZ旋转</button>
+    <button class="btn2">X旋转</button>
+    <button class="btn3">Z旋转</button>
+    <button class="btn4">Y选装</button>
+    <button class="btn5">停止选装</button>
+    
+    <div class="box">
+        <div class="d1">1</div>
+        <div class="d2">2</div>
+        <div class="d3">3</div>
+        <div class="d4">4</div>
+        <div class="d5">5</div>
+        <div class="d6">6</div>
+    </div>
+</body>
+<script src="js/jquery-2.2.3.js"></script>
+<script>
+	$(function(){
+		$(".btn1").click(function(){
+			$(".box").css({animation:"XYZ 3s linear infinite"})
+		})
+		
+		$(".btn2").on("click",function(){
+			$(".box").css({animation:"X 3s linear infinite"})
+		})
+		
+		$(".btn3").click(function(){
+			$(".box").css({animation:"Y 3s linear infinite"})
+		})
+		
+		$(".btn4").click(function(){
+			$(".box").css({animation:"Z 3s linear infinite"})
+		})
+		
+		$(".btn5").click(function(){
+			$(".box").css({animation:"STOP .1s linear infinite "})
+		})
+	})
+</script>
+</html>

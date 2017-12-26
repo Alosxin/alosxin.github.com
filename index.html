@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>我的作品展示页面</title>
+		<link rel="stylesheet" href="css/bootstrap4.min.css" />
+		<link rel="stylesheet" href="css/font-awesome.css" />
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+	<body>
+		<div id="app">
+			<header class="my-nav">
+				<ul class="container">
+					<li @click="changeView(index)" v-for="(nav,index) in navs">{{nav}}</li>
+				</ul>
+			</header>
+			<div class="container grid" ref="box">
+				<div v-for="b in boxs" class="box" :class="b.type">
+					<a :href="b.link">
+						<div :style="{backgroundColor:b.bg}">
+							<span class="fa fa-3x" :class="b.icon">{{b.txt}}</span>
+							<p>{{b.desc}}</p>
+						</div>
+					</a>
+				</div>
+			</div>
+			<footer>
+				<span>作者：黄鑫慧 @ QQ:614711977</span>
+			</footer>
+		</div>
+		<canvas id="canvas"></canvas>
+	</body>
+	<script src="js/vue.min.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/isotope.pkgd.min.js"></script>
+	<script src="js/canvas.js"></script>
+	<script>
+		var vm = new Vue({
+			el:"#app",
+			created(){
+				
+			},
+			mounted(){
+				var boxs = this.$refs.box.children;
+				$(boxs).each(function (i,e) {
+					var W =$(this).width();
+					console.log(W)
+					$(this).css("height",W*2/3+"px")
+				})				
+				$grid = $('.grid').isotope();
+				
+			},
+			data:{
+				navs:["All","Html/css","Javascript","Game","JQuery","Vue","Nodejs"],
+				boxs:[
+					{type:"t1",link:"http://personal.hycsxs.cn/resume/index.html",icon:"fa-star",txt:"",desc:"个人简历",bg:"rgba(126,205,244,0.7)"},
+					{type:"t6",link:"http://www.hycsxs.cn:8080",icon:"fa-weixin",txt:"",desc:"在线聊天室",bg:"rgba(0,255,128,0.7)"},
+					{type:"t3",link:"https://alosxin.github.io/snake",icon:"",txt:"snake",desc:"贪吃蛇游戏",bg:"rgba(221,240,237,0.7)"},
+					{type:"t5",link:"https://alosxin.github.io/todos",icon:" fa-search",txt:"",desc:"todos",bg:"rgba(73,90,128,0.7)"},
+					{type:"t1",link:"https://alosxin.github.io/public",icon:"fa-gift",txt:"",desc:"大众点评手机站",bg:"rgba(238,38,25,0.7)"},
+					{type:"t2",link:"https://alosxin.github.io/digital",icon:"fa-square-o",txt:"",desc:"数字时钟",bg:"rgba(153,102,204,0.7)"},
+					{type:"t3",link:"https://alosxin.github.io/2048",icon:"",txt:"2048",desc:"2048游戏",bg:"rgba(224,186,1,0.7)"},
+					{type:"t1",link:"https://alosxin.github.io/mrhabit",icon:"fa-paper-plane-o ",txt:"",desc:"mrhabit",bg:"rgba(0,255,128,0.7)"},
+					{type:"t1",link:"https://alosxin.github.io/bank",icon:"fa-university",txt:"",desc:"建行手机站",bg:"rgba(25,148,117,0.7)"},
+					{type:"t2",link:"https://alosxin.github.io/clock",icon:"fa-clock-o",txt:"",desc:"Canvas时钟",bg:"rgba(239,206,232,0.7)"},
+					{type:"t5",link:"http://www.hycsxs.cn/Personal/spa/",icon:"fa-android",txt:"",desc:"Vue SPA",bg:"rgba(46,104,170,0.7)"},
+					{type:"t1",link:"https://alosxin.github.io/mi",icon:"",txt:"mi",desc:"小米首页",bg:"rgba(255,103,0,0.7)"},
+					{type:"t4",link:"https://alosxin.github.io/direction",icon:"fa-arrows",txt:"",desc:"JQuery判断方向动画",bg:"rgba(30,30,200,0.7)"},
+					{type:"t5",link:"https://alosxin.github.io/animation",icon:"fa-envira",txt:"",desc:"Vue队列动画",bg:"rgba(254,227,136,0.7)"},
+					{type:"t4",link:"https://alosxin.github.io/cube",icon:"fa-cube",txt:"",desc:"旋转正方体",bg:"rgba(255,69,0,0.7)"},
+					{type:"t5",link:"https://alosxin.github.io/manage",icon:"fa-bar-chart ",txt:"",desc:"后台信息界面",bg:"rgba(215,69,215,0.7)"}
+					
+				]
+			},
+			methods:{
+				changeView(i){
+					$grid = $('.grid').isotope();
+					if(i == 0){
+						$grid.isotope({
+						  filter: '.box'
+						}); 	
+					}else{
+						$grid.isotope({
+						  filter: '.t'+i
+						}); 						
+					}
+				}
+			}
+			
+		})
+		
+		
+	</script>
+</html>
